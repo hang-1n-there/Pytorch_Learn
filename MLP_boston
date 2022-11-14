@@ -19,3 +19,14 @@ df.columns=bos.feature_names #데이터의 변수명 불러오기
 df['Price']=bos.target #집 값에 해당하는 타겟 값 불러오기
 
 df.head(10) #인수가 없으면 상위 5줄만 보여줌
+
+#최댓값을 1로, 최솟값을 0으로 바꿔서 사잇값을 0~1사이로 바꾼다.
+X=df.drop('Price', axis=1).to_numpy() #데이터프레임에서 타겟값 Price만 제외하고 모두 numpy 배열로 만듬
+Y=df['Price'].to_numpy().reshape((-1,1))
+
+scaler=MinMaxScaler()
+scaler.fit(X) #열을 기준으로 minmaxscaler를 진행한다
+X=scaler.transform(X)
+
+scaler.fit(Y)
+Y=scaler.transform(Y)
